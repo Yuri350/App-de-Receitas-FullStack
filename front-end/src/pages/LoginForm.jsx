@@ -62,7 +62,7 @@ function LoginForm() {
               type="email"
               name="email"
               id="email"
-              onChange={ (e) => setEmail({ email: e.target.value }) }
+              onChange={ (e) => setEmail(e.target.value) }
               value={ email }
             />
           </label>
@@ -75,7 +75,7 @@ function LoginForm() {
               type="password"
               name="password"
               id="password"
-              onChange={ (e) => setPassword({ password: e.target.value }) }
+              onChange={ (e) => setPassword(e.target.value) }
               value={ password }
             />
           </label>
