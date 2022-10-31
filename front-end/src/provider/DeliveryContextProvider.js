@@ -1,23 +1,38 @@
 import React, { useMemo, useState } from 'react';
 
 import PropTypes from 'prop-types';
-import DeliveryProvider from './DeliveryProvider';
+import DeliveryContext from './DeliveryContext';
 
 function DeliveryContextProvider({ children }) {
-  const [role, setRole] = useState;
+  const [role, setRole] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [tokenVerified, setTokenVerified] = useState('');
 
   const context = useMemo(() => ({
     role,
     setRole,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    tokenVerified,
+    setTokenVerified,
   }), [
     role,
     setRole,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    tokenVerified,
+    setTokenVerified,
   ]);
 
   return (
-    <DeliveryProvider.Provider value={ context }>
+    <DeliveryContext.Provider value={ context }>
       {children}
-    </DeliveryProvider.Provider>
+    </DeliveryContext.Provider>
   );
 }
 

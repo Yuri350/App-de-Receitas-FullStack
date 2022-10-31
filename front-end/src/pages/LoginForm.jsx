@@ -1,11 +1,18 @@
 // rfce
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
-import { requestLogin, setToken, requestData } from '../services/requests';
+import { requestLogin } from '../services/requests';
+import DeliveryContext from '../provider/DeliveryContext';
 
 function LoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    tokenVerified,
+    setTokenVerified,
+  } = useContext(DeliveryContext);
   const [isLogged, setIsLogged] = useState(false);
   const [failedTryLogin, setFailedTryLogin] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
@@ -22,43 +29,36 @@ function LoginForm() {
     }
   };
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
-
-    isVerify(email, password);
-
-    try {
-      const { token } = await requestLogin('http://localhost:3001/login', { email, password });
-
-      setToken(token);
-
-      const { role } = await requestData('/login/validate', { email, password });
-
-      localStorage.setItem('token', token);
-      localStorage.setItem('role', role);
-
-      setIsLogged(true);
-    } catch (error) {
+  const submitHandler = async () => {
+    const request = await requestLogin({ email, password });
+    console.log(request);
+    const { token } = request;
+    setTokenVerified(token);
+    const { role } = tokenVerified;
+    localStorage.setItem('token', token);
+    localStorage.setItem('role', role);
+    setIsLogged(true);
+    if (!request) {
       setFailedTryLogin(true);
       setIsLogged(false);
     }
   };
 
   useEffect(() => {
-    setFailedTryLogin(false);
+    isVerify(email, password);
   }, [email, password]);
 
   if (isLogged) return <Navigate to="/produtos" />;
 
   return (
-    <form onSubmit={ submitHandler }>
+    <form>
       <div className="form-inner">
         <h2>Login</h2>
         <div className="form-group">
           <label htmlFor="email">
             Login
             <input
-              data-testId="common_login__input-email"
+              data-testid="common_login__input-email"
               type="email"
               name="email"
               id="email"
@@ -71,7 +71,7 @@ function LoginForm() {
           <label htmlFor="password">
             Senha
             <input
-              data-testId="common_login__input-password"
+              data-testid="common_login__input-password"
               type="password"
               name="password"
               id="password"
@@ -80,18 +80,20 @@ function LoginForm() {
             />
           </label>
         </div>
-        <input
-          data-testId="common_login__button-login"
-          type="submit"
-          value="LOGIN"
-          isDisabled={ isDisabled }
-        />
-        <input
-          data-testId="common_login__button-register"
+        <button
+          data-testid="common_login__button-login"
           type="button"
-          value="Ainda não tenho conta"
-          isDisabled={ isDisabled }
-        />
+          disabled={ isDisabled }
+          onClick={ () => { submitHandler(); } }
+        >
+          LOGIN
+        </button>
+        <button
+          data-testid="common_login__button-register"
+          type="button"
+        >
+          Ainda não tenho conta
+        </button>
       </div>
       {(failedTryLogin)
         ? (
