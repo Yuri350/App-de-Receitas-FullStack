@@ -58,6 +58,7 @@ function LoginForm() {
           <label htmlFor="email">
             Login
             <input
+              data-testId="common_login__input-email"
               type="email"
               name="email"
               id="email"
@@ -70,6 +71,7 @@ function LoginForm() {
           <label htmlFor="password">
             Senha
             <input
+              data-testId="common_login__input-password"
               type="password"
               name="password"
               id="password"
@@ -79,8 +81,15 @@ function LoginForm() {
           </label>
         </div>
         <input
+          data-testId="common_login__button-login"
           type="submit"
           value="LOGIN"
+          isDisabled={ isDisabled }
+        />
+        <input
+          data-testId="common_login__button-register"
+          type="button"
+          value="Ainda não tenho conta"
           isDisabled={ isDisabled }
         />
       </div>
