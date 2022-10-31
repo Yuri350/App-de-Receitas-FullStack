@@ -28,7 +28,7 @@ function LoginForm() {
     isVerify(email, password);
 
     try {
-      const { token } = await requestLogin('/login', { email, password });
+      const { token } = await requestLogin('http://localhost:3001/login', { email, password });
 
       setToken(token);
 
