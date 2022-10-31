@@ -1,10 +1,12 @@
 const express = require('express');
 const cors = require('cors');
+const router = require('../routes');
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 
-app.use('/login', (_req, res) => res.status(201));
 app.get('/coffee', (_req, res) => res.status(418).end());
+app.use('/login', router.loginRoute);
 
 module.exports = app;
