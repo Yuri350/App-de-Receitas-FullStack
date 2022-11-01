@@ -1,18 +1,34 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
 
-export default function Register() {
+export default function SignUp() {
+  const { create } = useContext(AuthContext);
   const [user, setUser] = useState({
     name: '',
     email: '',
     password: '',
   });
 
+  const navigate = useNavigate();
+
   const handleChange = ({ target: { value, name } }) => {
     setUser((prevUser) => ({ ...prevUser, [name]: value }));
   };
 
+  const handleCreateUserSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await create(user);
+      navigate('/');
+    } catch (error) {
+      setIsError(true);
+      console.log(error);
+    }
+  };
+
   return (
-    <form>
+    <form onSubmit={ handleCreateUserSubmit }>
       <div className="form-inner">
         <h2>Cadastro</h2>
         <div className="form-group">
@@ -53,6 +69,7 @@ export default function Register() {
         <button
           data-testid="common_register__button-register"
           type="submit"
+
         >
           CADASTRAR
         </button>
