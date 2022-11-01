@@ -7,14 +7,14 @@ const tokenValidation = (req, res, next) => {
     return res.status(401).json({ message: 'Token not found' });
   }
   try {
-    const {id} = tokenHelper.verifyToken(authorization);
+    const { id } = tokenHelper.verifyToken(authorization);
     req.user = {
-      id
-    }
+      id,
+    };
     next();
   } catch (error) {
     return res.status(401).json({ message: 'Expired or invalid token' });
   }
 };
 
-module.exports = {tokenValidation};
+module.exports = { tokenValidation };

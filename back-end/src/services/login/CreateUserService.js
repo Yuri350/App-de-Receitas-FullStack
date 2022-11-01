@@ -1,21 +1,19 @@
-const { User } = require('../../database/models');
-const tokenHelper = require('../../helpers/Token');
 const md5 = require('md5');
+const { users } = require('../../database/models');
+const tokenHelper = require('../../helpers/Token');
 
-const create = async ({ email, password, name, role }) => {
-
-  const userExist = await User.findOne({ where: { email } });
+const create = async ({ email, password, name, role = '' }) => {
+  const userExist = await users.findOne({ where: { email } });
   if (userExist) {
     return null;
   }
-  const passwordHash = md5(password)
-  await User.create({ email, password: passwordHash, name, role }, );
-  const token = tokenHelper.createToken({ email, password, name, role })
+  const passwordHash = md5(password);
+  await users.create({ email, password: passwordHash, name, role });
+  const token = tokenHelper.createToken({ email, password, name, role });
 
   return {
     token,
-  }
-}
+  };
+};
 
-
-module.exports = { create }
+module.exports = { create };

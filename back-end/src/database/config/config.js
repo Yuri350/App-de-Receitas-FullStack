@@ -10,8 +10,6 @@ const suffix = {
   test: "-test",
 };
 
-console.log( process.env.MYSQL_PASSWORD)
-
 const options = {
   host: process.env.HOSTNAME || process.env.MYSQL_HOST || 'localhost',
   port: process.env.MYSQL_PORT || '3306',

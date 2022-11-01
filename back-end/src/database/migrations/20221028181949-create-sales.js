@@ -1,11 +1,8 @@
 'use strict';
 
-const { now } = require("moment");
-const { NOW } = require("sequelize");
-
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Sales', {
+    await queryInterface.createTable('sales', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,18 +12,26 @@ module.exports = {
       user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        foreignKey: true
+        foreignKey: true,
+        references: {
+          model: 'users',
+          key: 'id'
+        },
       },
       seller_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        foreignKey: true
+        foreignKey: true,
+        references: {
+          model: 'users',
+          key: 'id'
+        },
       },
       total_price: {
         allowNull: false,
         type: Sequelize.DECIMAL(9,2)
       },
-      delivery_Adress: {
+      delivery_address: {
         allowNull: false,
         type: Sequelize.STRING(100)
       },
@@ -45,6 +50,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Sales');
+    await queryInterface.dropTable('sales');
   }
 };

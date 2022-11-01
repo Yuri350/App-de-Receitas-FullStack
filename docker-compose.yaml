@@ -2,6 +2,7 @@ version: '3.9'
 services:
   frontend:
     container_name: app_frontend
+    platform: linux/x86_64
     build: ./front-end
     ports:
       - 3000:3000
@@ -10,30 +11,32 @@ services:
       - backend
     depends_on:
       - backend
+    environment:
+      REACT_APP_URL_API: http://localhost:3001
     volumes:
       - ./front-end:/app-frontend
-    restart: 'always'
+    restart: always
 
   backend:
     container_name: app_backend
+    platform: linux/x86_64
     build: ./back-end
     ports:
       - 3001:3001
     working_dir: /app-backend
     volumes:
       - ./back-end/src:/app-backend/src
+    restart: 'always'
     links:
       - db
     depends_on:
       - db
     environment:
       APP_PORT: 3001
-      JWT_SECRET: jwt_secret
+      JWT_SECRET: secretJWT
       MYSQL_USER: root
       MYSQL_PASSWORD: password
       HOSTNAME: db
-      MYSQL_PORT: 3306
-    restart: 'always'
   db:
     image: mysql:8.0.21
     container_name: db
@@ -43,3 +46,5 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
     restart: 'always'
+    cap_add:
+      - SYS_NICE
