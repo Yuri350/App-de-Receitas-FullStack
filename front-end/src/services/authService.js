@@ -14,5 +14,4 @@ export const signInRequest = async (body) => {
 export const requestCreate = async ({ email, name, password, role = 'customer' }) => {
   const { data } = await api.post('/users', { email, name, password, role });
   console.log(data);
-  return data;
 };

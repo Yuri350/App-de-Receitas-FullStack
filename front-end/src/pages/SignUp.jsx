@@ -1,31 +1,57 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 
 export default function SignUp() {
   const { create } = useContext(AuthContext);
-  const [user, setUser] = useState({
+  const [data, setData] = useState({
     name: '',
     email: '',
     password: '',
   });
+  const [isError, setIsError] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const navigate = useNavigate();
 
   const handleChange = ({ target: { value, name } }) => {
-    setUser((prevUser) => ({ ...prevUser, [name]: value }));
+    setData((prevUser) => ({ ...prevUser, [name]: value }));
   };
 
   const handleCreateUserSubmit = async (event) => {
     event.preventDefault();
     try {
-      await create(user);
+      await create(data);
       navigate('/');
     } catch (error) {
       setIsError(true);
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    const isVerify = () => {
+      const { email, password, name } = data;
+      const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+      const MIN_LENGTH = 6;
+      const MIN_NAME_LENGTH = 12;
+
+      const valid = (
+        emailRegex.test(email)
+        && password.length >= MIN_LENGTH
+        && name.length >= MIN_NAME_LENGTH && name !== ''
+      );
+
+      console.log(valid);
+
+      if (valid) {
+        setIsDisabled(false);
+      } else {
+        setIsDisabled(true);
+      }
+    };
+    isVerify();
+  }, [data]);
 
   return (
     <form onSubmit={ handleCreateUserSubmit }>
@@ -40,7 +66,7 @@ export default function SignUp() {
               name="name"
               id="name"
               onChange={ handleChange }
-              value={ user.name }
+              value={ data.name }
             />
           </label>
           <label htmlFor="email">
@@ -51,7 +77,7 @@ export default function SignUp() {
               name="email"
               id="email"
               onChange={ handleChange }
-              value={ user.email }
+              value={ data.email }
             />
           </label>
           <label htmlFor="password">
@@ -62,18 +88,29 @@ export default function SignUp() {
               name="password"
               id="password"
               onChange={ handleChange }
-              value={ user.password }
+              value={ data.password }
             />
           </label>
         </div>
         <button
           data-testid="common_register__button-register"
           type="submit"
-
+          disabled={ isDisabled }
         >
           CADASTRAR
         </button>
       </div>
+      {
+        isError
+        && (
+          <span
+            data-testid="common_register__element-invalid_register"
+          >
+            Nõa foi possível fazer o cadastro
+          </span>
+        )
+      }
+
     </form>
   );
 }

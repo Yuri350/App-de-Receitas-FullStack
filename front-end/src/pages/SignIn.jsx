@@ -10,14 +10,19 @@ function SignIn() {
   });
   const [isDisabled, setIsDisabled] = useState(true);
   const navigate = useNavigate();
+  const [isError, setIsError] = useState(false);
 
   const handleChangeLogin = ({ target: { value, name } }) => {
     SetData((prevState) => ({ ...prevState, [name]: value }));
   };
 
   const submitHandler = async () => {
-    await login(data);
-    navigate('/');
+    try {
+      await login(data);
+      navigate('/');
+    } catch (error) {
+      setIsError(true);
+    }
   };
 
   const handleOpenScreenRegister = () => navigate('/register');
@@ -25,7 +30,8 @@ function SignIn() {
   useEffect(() => {
     const isVerify = () => {
       const { email, password } = data;
-      const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
+      // const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
+      const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
       const emailTest = emailRegex.test(email);
       const MIN_LENGTH = 6;
 
@@ -84,6 +90,16 @@ function SignIn() {
           Ainda não tenho conta
         </button>
       </div>
+      {
+        isError
+        && (
+          <span
+            data-testid="common_login__element-invalid-email"
+          >
+            Nõa foi possível fazer o cadastro
+          </span>
+        )
+      }
     </form>
   );
 }
