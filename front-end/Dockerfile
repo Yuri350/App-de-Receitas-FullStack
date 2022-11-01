@@ -1,7 +1,13 @@
 FROM node:16.18
-WORKDIR /app/front-end
- 
-COPY package* ./
+
+WORKDIR /app-frontend
+
+COPY package*.json ./
+
 RUN npm install
+
 COPY . .
-CMD [ "npm", "start" ] 
+
+CMD [ "npm", "start" ]
+
+
