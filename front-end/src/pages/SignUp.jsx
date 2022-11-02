@@ -32,19 +32,17 @@ export default function SignUp() {
   useEffect(() => {
     const isVerify = () => {
       const { email, password, name } = data;
-      const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+      const emailCheck = email
+        .split('').includes('@') && email.split('.').includes('com');
       const MIN_LENGTH = 6;
       const MIN_NAME_LENGTH = 12;
-
-      const valid = (
-        emailRegex.test(email)
+      const valuesChecked = (
+        emailCheck
         && password.length >= MIN_LENGTH
         && name.length >= MIN_NAME_LENGTH && name !== ''
       );
 
-      console.log(valid);
-
-      if (valid) {
+      if (valuesChecked) {
         setIsDisabled(false);
       } else {
         setIsDisabled(true);

@@ -2,14 +2,13 @@ const tokenHelper = require('../helpers/Token');
 
 const tokenValidation = (req, res, next) => {
   const { authorization } = req.headers;
-  console.log(authorization);
   if (!authorization) {
     return res.status(401).json({ message: 'Token not found' });
   }
   try {
-    const { id } = tokenHelper.verifyToken(authorization);
+    const { email } = tokenHelper.verifyToken(authorization);
     req.user = {
-      id,
+      email,
     };
     next();
   } catch (error) {

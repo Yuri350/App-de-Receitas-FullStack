@@ -1,7 +1,4 @@
 {
   "root": true,
-  "extends": ["trybe-frontend"],
-  "rules": {
-    "no-useless-escape": "off"
-  }
+  "extends": ["trybe-frontend"]
 }

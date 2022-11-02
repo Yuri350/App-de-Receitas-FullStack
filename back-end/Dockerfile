@@ -3,5 +3,6 @@ WORKDIR /app/back-end
  
 COPY package* ./
 RUN npm install
+
 COPY . .
 CMD [ "npm", "run", "dev" ] 

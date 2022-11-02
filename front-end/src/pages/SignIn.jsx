@@ -30,12 +30,15 @@ function SignIn() {
   useEffect(() => {
     const isVerify = () => {
       const { email, password } = data;
-      // const emailRegex = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
-      const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-      const emailTest = emailRegex.test(email);
+      const emailCheck = email
+        .split('').includes('@') && email.split('.').includes('com');
       const MIN_LENGTH = 6;
+      const valuesChecked = (
+        emailCheck
+        && password.length >= MIN_LENGTH
+      );
 
-      if (emailTest && password.length >= MIN_LENGTH) {
+      if (valuesChecked) {
         setIsDisabled(false);
       } else {
         setIsDisabled(true);
