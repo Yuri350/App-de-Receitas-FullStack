@@ -28,7 +28,7 @@ const createLoginSchema = joi.object({
   password: joi.string().min(6).required().messages(
     { 'string.min': '"password" length must be at least 6 characters long' },
   ),
-  role: joi.string().required().messages(
+  role: joi.string().messages(
     { 'string.empty': ERROR_MESSAGE },
   ),
 });

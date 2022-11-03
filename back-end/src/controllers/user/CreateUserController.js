@@ -1,8 +1,8 @@
 const UsersService = require('../../services/login/CreateUserService');
 
 const create = async (request, response) => {
-  const { email, password, name, role } = request.body;
-  const userCreated = await UsersService.create({ email, password, name, role });
+  const { email, password, name } = request.body;
+  const userCreated = await UsersService.create({ email, password, name });
   if (!userCreated) {
     return response.status(409).json({ message: 'User already registered' });
   }

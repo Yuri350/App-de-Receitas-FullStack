@@ -30,7 +30,8 @@ export function AuthProvider({ children }) {
   }, []);
 
   const create = useCallback(async ({ name, email, password }) => {
-    const { token } = await requestCreate({ name, email, password });
+    const role = 'customer';
+    const { token } = await requestCreate({ name, email, password, role });
     console.log(token);
     localStorage.setItem(KEY_TOKEN, token);
     setIsAuthenticate(true);

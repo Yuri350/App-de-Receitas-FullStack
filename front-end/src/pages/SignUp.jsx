@@ -52,7 +52,7 @@ export default function SignUp() {
   }, [data]);
 
   return (
-    <form onSubmit={ handleCreateUserSubmit }>
+    <form>
       <div className="form-inner">
         <h2>Cadastro</h2>
         <div className="form-group">
@@ -94,6 +94,7 @@ export default function SignUp() {
           data-testid="common_register__button-register"
           type="submit"
           disabled={ isDisabled }
+          onClick={ handleCreateUserSubmit }
         >
           CADASTRAR
         </button>
