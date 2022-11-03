@@ -18,6 +18,7 @@ export default function Products() {
   return (
     <div>
       <NavBar />
+
     </div>
     // <div>
     //   <NavBar />
