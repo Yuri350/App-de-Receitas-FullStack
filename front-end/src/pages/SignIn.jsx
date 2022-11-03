@@ -9,8 +9,8 @@ function SignIn() {
     password: '',
   });
   const [isDisabled, setIsDisabled] = useState(true);
-  const navigate = useNavigate();
   const [isError, setIsError] = useState(false);
+  const navigate = useNavigate();
 
   const handleChangeLogin = ({ target: { value, name } }) => {
     SetData((prevState) => ({ ...prevState, [name]: value }));
