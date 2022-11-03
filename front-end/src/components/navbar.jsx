@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { AuthContext } from '../contexts/AuthContext';
 
 export default function NavBar() {
-  const [user, setUser] = useState('');
-  useEffect(() => () => {
-    const userData = localStorage.getItem('userData');
-    const username = JSON.parse(userData);
-    //  console.log(username.name); verificar no local storage.
-    setUser(username.name);
-  });
+  const { setIsAuthenticate } = useContext(AuthContext);
+
   return (
     <header>
       <nav>
@@ -28,11 +24,12 @@ export default function NavBar() {
           data-testid="customer_products__element-navbar-user-full-name"
           to="/user"
         >
-          { user }
+          User
         </NavLink>
         <NavLink
           data-testid="customer_products__element-navbar-link-logout"
-          to="/logout"
+          to="/login"
+          onClick={ () => setIsAuthenticate(false) }
         >
           Sair
         </NavLink>

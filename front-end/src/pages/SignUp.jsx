@@ -22,7 +22,7 @@ export default function SignUp() {
     event.preventDefault();
     try {
       await create(data);
-      navigate('/');
+      navigate('/customer/products');
     } catch (error) {
       setIsError(true);
       console.log(error);

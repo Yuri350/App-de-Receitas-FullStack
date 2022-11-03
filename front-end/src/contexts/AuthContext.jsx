@@ -9,7 +9,7 @@ export function AuthProvider({ children }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticate, setIsAuthenticate] = useState(false);
 
-  const KEY_TOKEN = 'token';
+  const KEY_TOKEN = 'users';
 
   useEffect(() => {
     const getUser = async () => {
@@ -29,17 +29,19 @@ export function AuthProvider({ children }) {
     getUser();
   }, []);
 
-  const create = useCallback(async ({ name, email, password }) => {
-    const role = 'customer';
-    const { token } = await requestCreate({ name, email, password, role });
-    console.log(token);
-    localStorage.setItem(KEY_TOKEN, token);
+  const create = useCallback(async ({ name, email, password, role }) => {
+    const userData = await requestCreate({ name, email, password, role });
+
+    localStorage.setItem(KEY_TOKEN, JSON.stringify(userData));
+
     setIsAuthenticate(true);
   }, []);
 
   const login = useCallback(async ({ email, password }) => {
-    const { token } = await signInRequest({ email, password });
-    localStorage.setItem(KEY_TOKEN, token);
+    const userData = await signInRequest({ email, password });
+
+    localStorage.setItem(KEY_TOKEN, JSON.stringify(userData));
+
     setIsAuthenticate(true);
   }, []);
 
