@@ -14,7 +14,13 @@ const login = async (email, password) => {
     return null;
   }
   const token = tokenHelper.createToken(result);
+
+  const { name, role } = result;
+
   return {
+    name,
+    email,
+    role,
     token,
   };
 };
