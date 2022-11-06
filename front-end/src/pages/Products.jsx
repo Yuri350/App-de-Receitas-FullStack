@@ -7,7 +7,7 @@ export default function Products() {
   const [user, setUser] = useState('');
   console.log(user);
 
-  const [allProducts, setAllProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]); // preciso na pagina de productDetails (nao subi pro contexto)
 
   useEffect(() => {
     const userData = localStorage.getItem('users');
