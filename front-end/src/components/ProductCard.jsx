@@ -1,63 +1,98 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import useQuantity from '../hooks/useQuantity';
+import { AuthContext } from '../contexts/AuthContext';
+
+export const updatePrice = (price) => Number(price).toFixed(2).replace('.', ',');
 
 export default function ProductCards({
-  product, addCart, decreaseCart }) {
-  const { quantity } = useQuantity(product.id);
+  product }) {
+  const { cart, setCart } = useContext(AuthContext);
 
-  const handleAddNewProductCart = () => {
-    addCart(product);
+  const [quantity, setQuantity] = useState(0);
+
+  function handleCart(totalCart) {
+    const cartProduct = cart.find(({ name }) => name === product.name);
+    if (!cartProduct) {
+      setCart([...cart, { ...product, quantity: totalCart }]);
+    } else {
+      const updatedProducts = cart.map((updatedProduct) => {
+        if (updatedProduct.name === product.name) {
+          return { ...updatedProduct, quantity: totalCart };
+        }
+        return updatedProduct;
+      });
+      setCart(updatedProducts);
+    }
+  }
+
+  function removeCartProduct() {
+    const removeProducts = cart.filter(({ name }) => name !== product.name);
+    setCart(removeProducts);
+  }
+
+  const addQuantity = () => {
+    setQuantity(quantity + 1);
+    handleCart(quantity + 1);
   };
 
-  const handleDecreaseProductCart = () => {
-    decreaseCart(product.id);
+  const removeQuantity = () => {
+    if (quantity > 0) {
+      setQuantity(quantity - 1);
+      if (quantity - 1 === 0) {
+        removeCartProduct();
+      } else {
+        handleCart(quantity - 1);
+      }
+    }
   };
 
-  const { id, name, price, url_image: urlImage } = product;
+  const handleChange = ({ target }) => {
+    setQuantity(target.value);
+    if (target.value === 0) {
+      removeCartProduct();
+    } else {
+      handleCart(target.value);
+    }
+  };
 
   return (
     <div>
-      <h1>
-        R$
-        {' '}
-        <span data-testid={ `customer_products__element-card-price-${id}` }>
-          {price.replace(/\./, ',')}
-        </span>
-      </h1>
-      <img
-        data-testid={ `customer_products__img-card-bg-image-${id}` }
-        src={ urlImage }
-        alt="Produto"
-      />
-
-      <div>
-        <p data-testid={ `customer_products__element-card-title-${id}` }>
-          { name }
-        </p>
-
-        <button
-          type="button"
-          data-testid={ `customer_products__button-card-rm-item-${id}` }
-          onClick={ handleDecreaseProductCart }
-        >
-          -
-        </button>
-        <input
-          type="number"
-          data-testid={ `customer_products__input-card-quantity-${id}` }
-          value={ quantity || 0 }
-          onChange={ () => {} }
+      <p
+        data-testid={ `customer_products__element-card-title-${product.id}` }
+      >
+        {product.name}
+      </p>
+      <p data-testid={ `customer_products__element-card-price-${product.id}` }>
+        {Number(product.price).toFixed(2).replace('.', ',')}
+      </p>
+      <div className="img-cards">
+        <img
+          data-testid={ `customer_products__img-card-bg-image-${product.id}` }
+          src={ product.url_image }
+          alt={ product.name }
         />
-
-        <button
-          type="button"
-          data-testid={ `customer_products__button-card-add-item-${id}` }
-          onClick={ handleAddNewProductCart }
-        >
-          +
-        </button>
       </div>
+      <button
+        data-testid={ `customer_products__button-card-rm-item-${product.id}` }
+        type="button"
+        onClick={ removeQuantity }
+      >
+        -
+      </button>
+      <input
+        data-testid={ `customer_products__input-card-quantity-${product.id}` }
+        type="number"
+        min={ 0 }
+        onChange={ handleChange }
+        value={ quantity }
+      />
+      <button
+        data-testid={ `customer_products__button-card-add-item-${product.id}` }
+        type="button"
+        onClick={ addQuantity }
+      >
+        +
+      </button>
     </div>
   );
 }
@@ -69,6 +104,4 @@ ProductCards.propTypes = {
     url_image: PropTypes.string.isRequired,
     price: PropTypes.string.isRequired,
   }).isRequired,
-  addCart: PropTypes.func.isRequired,
-  decreaseCart: PropTypes.func.isRequired,
 };

@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 
 export default function SignUp() {
@@ -12,8 +11,6 @@ export default function SignUp() {
   const [isError, setIsError] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const navigate = useNavigate();
-
   const handleChange = ({ target: { value, name } }) => {
     setData((prevUser) => ({ ...prevUser, [name]: value }));
   };
@@ -22,7 +19,6 @@ export default function SignUp() {
     event.preventDefault();
     try {
       await create(data);
-      navigate('/customer/products');
     } catch (error) {
       setIsError(true);
       console.log(error);

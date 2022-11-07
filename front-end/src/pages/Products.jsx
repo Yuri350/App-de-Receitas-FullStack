@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
-import NavBar from '../components/navbar';
+import { useNavigate } from 'react-router-dom';
 import ProductCards from '../components/ProductCard';
 import { AuthContext } from '../contexts/AuthContext';
 import requestProducts from '../services/requestProducts';
-
-import styles from './styles/products.module.css';
+import priceFormatter from '../utils/formatter';
 
 export default function Products() {
-  const { addCart, decreaseCart } = useContext(AuthContext);
+  const { cart, totalPrice } = useContext(AuthContext);
   const [allProducts, setAllProducts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getAllProducts() {
@@ -23,19 +23,26 @@ export default function Products() {
   }, []);
 
   return (
-    <div>
-      <NavBar />
-      <main className={ styles.container }>
-        {
-          allProducts.map((product) => (
-            <ProductCards
-              key={ product.id }
-              product={ product }
-              addCart={ addCart }
-              decreaseCart={ decreaseCart }
-            />))
-        }
-      </main>
-    </div>
+    <main>
+      <div>
+        {allProducts.map((product) => (
+          <ProductCards
+            key={ product.id }
+            product={ product }
+          />))}
+      </div>
+      <button
+        type="button"
+        data-testid="customer_products__button-cart"
+        disabled={ cart.length === 0 }
+        onClick={ () => navigate('/customer/checkout') }
+      >
+        <p
+          data-testid="customer_products__checkout-bottom-value"
+        >
+          {`Ver carrinho: ${priceFormatter.format(totalPrice)}`}
+        </p>
+      </button>
+    </main>
   );
 }

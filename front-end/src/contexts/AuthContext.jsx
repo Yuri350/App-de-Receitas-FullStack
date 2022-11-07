@@ -38,36 +38,15 @@ export function AuthProvider({ children }) {
   const logout = useCallback(async () => {
     setUser(null);
     localStorage.removeItem(KEY_TOKEN);
+    localStorage.removeItem(KEY_CART);
   }, []);
 
   const isAuthenticate = !!user;
 
-  const addCart = useCallback((newProduct) => {
-    const indexProduct = cart.find((product) => product.id === newProduct.id);
-    if (indexProduct) {
-      const ind = cart.indexOf(indexProduct);
-      const arr = cart;
-      arr[ind].quantity += 1;
-      setCart([...arr]);
-    } else {
-      setCart((prevState) => [...prevState, { ...newProduct, quantity: 1 }]);
-    }
-  }, [cart]);
-
-  const decreaseCart = useCallback((id) => {
-    const indexProductCart = cart.findIndex((item) => item.id === id);
-    const notFoundIndex = -1;
-
-    if (indexProductCart !== notFoundIndex && cart[indexProductCart]?.quantity > 0) {
-      const updatedCart = [...cart];
-      updatedCart[indexProductCart].quantity -= 1;
-      setCart(updatedCart);
-    }
-  }, [cart]);
-
-  const removeProductCart = (id) => {
-    setCart((prevState) => prevState.filter((products) => products.id !== id));
-  };
+  const totalPrice = cart.reduce((acc, product) => {
+    const price = Number(product.price) * Number(product.quantity);
+    return acc + price;
+  }, 0);
 
   useEffect(() => {
     if (cart) {
@@ -82,10 +61,9 @@ export function AuthProvider({ children }) {
       logout,
       isAuthenticate,
       user,
-      addCart,
-      decreaseCart,
       cart,
-      removeProductCart,
+      setCart,
+      totalPrice,
     }),
     [
       create,
@@ -93,9 +71,9 @@ export function AuthProvider({ children }) {
       login,
       logout,
       user,
-      addCart,
-      decreaseCart,
       cart,
+      setCart,
+      totalPrice,
     ],
   );
 
