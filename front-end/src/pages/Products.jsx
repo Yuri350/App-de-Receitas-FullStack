@@ -1,44 +1,48 @@
-import React, { useEffect } from 'react';
-import NavBar from '../components/navbar';
-// import ProductCards from '../components/ProductCards';
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import ProductCards from '../components/ProductCard';
+import { AuthContext } from '../contexts/AuthContext';
+import requestProducts from '../services/requestProducts';
+import priceFormatter from '../utils/formatter';
 
 export default function Products() {
-  // const [user, setUser] = useState('');
-
-  // const [allProducts, setAllProducts] = useState([]);
-
-  // const request = async () => {
-  // const { data } = await axios.get('http://localhost:3001/customer/products');
-  // setAllProducts(data);
-  // };
+  const { cart, totalPrice } = useContext(AuthContext);
+  const [allProducts, setAllProducts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const userData = localStorage.getItem('users');
-    const tokenData = JSON.parse(userData);
-    console.log(tokenData);
-
-    // setUser(tokenData);
+    async function getAllProducts() {
+      try {
+        const data = await requestProducts();
+        setAllProducts(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getAllProducts();
   }, []);
 
   return (
-    <div>
-      <NavBar />
-
-    </div>
-    // <div>
-    //   <NavBar />
-    //   <main>
-    //     {
-    //       allProducts.map((product) => (
-    //         <ProductCards
-    //           key={ product.id }
-    //           id={ product.id }
-    //           name={ product.name }
-    //           urlImage={ product.urlImage }
-    //           price={ product.price }
-    //         />))
-    //     }
-    //   </main>
-    // </div>
+    <main>
+      <div>
+        {allProducts.map((product) => (
+          <ProductCards
+            key={ product.id }
+            product={ product }
+          />))}
+      </div>
+      <button
+        type="button"
+        data-testid="customer_products__button-cart"
+        disabled={ cart.length === 0 }
+        onClick={ () => navigate('/customer/checkout') }
+      >
+        <p
+          data-testid="customer_products__checkout-bottom-value"
+        >
+          {`Ver carrinho: ${priceFormatter.format(totalPrice)}`}
+        </p>
+      </button>
+    </main>
   );
 }
