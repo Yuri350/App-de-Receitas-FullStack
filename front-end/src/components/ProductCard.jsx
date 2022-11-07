@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import useQuantity from '../hooks/useQuantity';
 
-export default function ProductCards(product) {
-  const [counter, setCounter] = useState(0);
-  const { id, name, urlimage: urlImage, price } = product;
+export default function ProductCards({
+  product, addCart, decreaseCart }) {
+  const { quantity } = useQuantity(product.id);
 
-  const handlerValue = ({ target: { value } }) => {
-    const isZero = value > 0;
-    setCounter(isZero ? value : 0);
+  const handleAddNewProductCart = () => {
+    addCart(product);
   };
+
+  const handleDecreaseProductCart = () => {
+    decreaseCart(product.id);
+  };
+
+  const { id, name, price, url_image: urlImage } = product;
 
   return (
     <div>
-      <h1 data-testid={ `customer_products__element-card-price-${id}` }>
-        {`R$ ${price}`}
+      <h1>
+        R$
+        {' '}
+        <span data-testid={ `customer_products__element-card-price-${id}` }>
+          {price.replace(/\./, ',')}
+        </span>
       </h1>
-
       <img
         data-testid={ `customer_products__img-card-bg-image-${id}` }
         src={ urlImage }
@@ -29,20 +39,21 @@ export default function ProductCards(product) {
         <button
           type="button"
           data-testid={ `customer_products__button-card-rm-item-${id}` }
-          onClick={ () => setCounter(counter - 1) }
+          onClick={ handleDecreaseProductCart }
         >
           -
         </button>
         <input
           type="number"
           data-testid={ `customer_products__input-card-quantity-${id}` }
-          value={ counter }
-          onChange={ (e) => handlerValue(e) }
+          value={ quantity || 0 }
+          onChange={ () => {} }
         />
+
         <button
           type="button"
           data-testid={ `customer_products__button-card-add-item-${id}` }
-          onClick={ () => setCounter(counter + 1) }
+          onClick={ handleAddNewProductCart }
         >
           +
         </button>
@@ -50,3 +61,14 @@ export default function ProductCards(product) {
     </div>
   );
 }
+
+ProductCards.propTypes = {
+  product: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    url_image: PropTypes.string.isRequired,
+    price: PropTypes.string.isRequired,
+  }).isRequired,
+  addCart: PropTypes.func.isRequired,
+  decreaseCart: PropTypes.func.isRequired,
+};

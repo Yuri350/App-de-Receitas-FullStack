@@ -1,13 +1,9 @@
-const { Router } = require('express');
+const express = require('express');
 
-const multer = require('multer');
-const uploadConfig = require('../config/upload');
 const productsController = require('../controllers/ProductController');
-const uploadImageController = require('../controllers/uploadImageController');
-const upload = multer(uploadConfig.upload('./tmp/products'));
 
-const router = Router();
+const router = express.Router();
+
 router.get('/', productsController.getAll);
-router.patch('/:id', uploadImageController.upload);
 
 module.exports = router;

@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 
 export default function NavBar() {
-  const { setIsAuthenticate } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
 
   return (
     <header>
@@ -24,15 +24,15 @@ export default function NavBar() {
           data-testid="customer_products__element-navbar-user-full-name"
           to="/user"
         >
-          User
+          {user?.name}
         </NavLink>
-        <NavLink
+        <button
           data-testid="customer_products__element-navbar-link-logout"
-          to="/login"
-          onClick={ () => setIsAuthenticate(false) }
+          type="button"
+          onClick={ () => logout() }
         >
           Sair
-        </NavLink>
+        </button>
       </nav>
     </header>
   );
