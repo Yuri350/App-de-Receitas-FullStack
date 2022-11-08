@@ -4,6 +4,7 @@ import NavBar from '../components/navbar';
 
 function ProductsDetails() {
   const [allProducts, setAllProducts] = useState([]); // Products: nao subi pro contexto e preciso
+  console.log(setAllProducts);
   return (
     <div>
       <NavBar />
