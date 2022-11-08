@@ -1,27 +1,26 @@
 const Sales = (sequelize, DataTypes) => {
   const Sales = sequelize.define('sales', {
-    id: {type: DataTypes.INTEGER, primaryKey: true},
-    user_id: DataTypes.INTEGER,
-    seller_id: DataTypes.INTEGER,
-    total_price: DataTypes.DECIMAL,
-    delivery_address: DataTypes.STRING,
-    delivery_number: DataTypes.STRING,
-    sale_date: DataTypes.DATE,
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    userId: DataTypes.INTEGER,
+    sellerId: DataTypes.INTEGER,
+    totalPrice: DataTypes.DECIMAL,
+    deliveryAddress: DataTypes.STRING,
+    deliveryNumber: DataTypes.STRING,
+    saleDate: DataTypes.DATE,
     status: DataTypes.STRING
   },
   {
-    createdAt: 'sale_date'
-  },
-  {
+    timestamps: false,
     tableName: 'sales',
+    underscored: true
   });
 
   Sales.associate = (models) => {
     Sales.belongsTo(models.users, {
-      foreignKey: 'user_id', as: 'User',
+      foreignKey: 'userId', as: 'User',
     }),
       Sales.belongsTo(models.users, {
-        foreignKey: 'seller_id', as: 'Seller',
+        foreignKey: 'sellerId', as: 'Seller',
       });
   }
 
