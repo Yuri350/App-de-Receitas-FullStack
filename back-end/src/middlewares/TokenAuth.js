@@ -9,7 +9,7 @@ const tokenValidation = (req, res, next) => {
     const { email, id } = tokenHelper.verifyToken(authorization);
     req.user = {
       email,
-      id
+      id,
     };
     next();
   } catch (error) {

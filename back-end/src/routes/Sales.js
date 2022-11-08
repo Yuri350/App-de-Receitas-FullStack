@@ -12,5 +12,4 @@ router.post('/', salesController.createSale);
 router.get('/customer/orders', salesController.getByCustomer);
 router.get('/seller/orders', salesController.getBySeller);
 
-
 module.exports = router;
