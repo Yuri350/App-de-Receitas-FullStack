@@ -19,7 +19,6 @@ function SignIn() {
   const submitHandler = async () => {
     try {
       await login(data);
-      navigate('/customer/products');
     } catch (error) {
       setIsError(true);
     }

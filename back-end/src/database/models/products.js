@@ -2,16 +2,17 @@ const Products = (sequelize, DataTypes) => {
   const Products = sequelize.define('products', {
     name: DataTypes.STRING,
     price: DataTypes.DECIMAL,
-    url_image: DataTypes.STRING,
+    urlImage: DataTypes.STRING,
   },
     {
       timestamps: false,
       tableName: 'products',
+      underscored: true
     });
 
   Products.associate = (models) => {
     Products.hasMany(models.salesProducts, {
-      foreignKey: 'product_id', as: 'SalesProducts1',
+      foreignKey: 'productId', as: 'SalesProducts1',
     });
   }
 

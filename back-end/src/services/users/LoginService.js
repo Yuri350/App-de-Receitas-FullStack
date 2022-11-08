@@ -15,9 +15,10 @@ const login = async (email, password) => {
   }
   const token = tokenHelper.createToken(result);
 
-  const { name, role } = result;
+  const { name, role, id } = result;
 
   return {
+    id,
     name,
     email,
     role,
