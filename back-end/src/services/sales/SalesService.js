@@ -22,4 +22,24 @@ const createSale = async (sale, token) => {
   return dataValues;
 };
 
-module.exports = { createSale };
+const getByCustomer = async (id) => {
+  const listedSales = await sales.findAll({
+    where: { userId: id },
+    attributes: {
+      exclude: [
+        'userId',
+        'sellerId',
+      ],
+    },
+  });
+  return listedSales;
+};
+
+const getBySeller = async (id) => {
+  const listedSales = await sales.findAll({
+    where: { sellerId: id },
+  });
+  return listedSales;
+};
+
+module.exports = { createSale, getByCustomer, getBySeller };
