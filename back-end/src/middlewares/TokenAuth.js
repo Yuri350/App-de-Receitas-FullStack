@@ -6,9 +6,10 @@ const tokenValidation = (req, res, next) => {
     return res.status(401).json({ message: 'Token not found' });
   }
   try {
-    const { email } = tokenHelper.verifyToken(authorization);
+    const { email, id } = tokenHelper.verifyToken(authorization);
     req.user = {
       email,
+      id
     };
     next();
   } catch (error) {
