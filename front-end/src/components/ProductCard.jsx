@@ -68,7 +68,7 @@ export default function ProductCards({
       <div className="img-cards">
         <img
           data-testid={ `customer_products__img-card-bg-image-${product.id}` }
-          src={ product.url_image }
+          src={ product.urlImage }
           alt={ product.name }
         />
       </div>
@@ -101,7 +101,7 @@ ProductCards.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    url_image: PropTypes.string.isRequired,
+    urlImage: PropTypes.string.isRequired,
     price: PropTypes.string.isRequired,
   }).isRequired,
 };
