@@ -6,16 +6,9 @@ import requestProducts from '../services/requestProducts';
 import priceFormatter from '../utils/formatter';
 
 export default function Products() {
-<<<<<<< HEAD
-  const [user, setUser] = useState('');
-  console.log(user);
-
-  const [allProducts, setAllProducts] = useState([]); // preciso na pagina de productDetails (nao subi pro contexto)
-=======
   const { cart, totalPrice } = useContext(AuthContext);
   const [allProducts, setAllProducts] = useState([]);
   const navigate = useNavigate();
->>>>>>> origin/fernando-main-group-6-checkout
 
   useEffect(() => {
     async function getAllProducts() {

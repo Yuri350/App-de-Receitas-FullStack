@@ -14,5 +14,6 @@ app.use('/users', router.usersRoute);
 app.use('/customer/products', router.productsRoute);
 app.use('/getUsers', router.getUsers);
 app.use('/sale', router.salesRoute);
+app.use('/order', router.OrderDetailsRoute);
 
 module.exports = app;

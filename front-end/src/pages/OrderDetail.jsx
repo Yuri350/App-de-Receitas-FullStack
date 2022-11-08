@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { userParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import NavBar from '../components/navbar';
+import orderDetails from '../services/orderDetails';
 
-function ProductsDetails() {
-  const [allProducts, setAllProducts] = useState([]); // Products: nao subi pro contexto e preciso
-  console.log(setAllProducts);
+function OrderDetail() {
+  const [data, setData] = useState({});
+  const [productsData, setProductsData] = useState([]);
+
+  const { id } = userParams();
+
+  useEffect(() => {
+    const { info, products } = orderDetails(id);
+    setData(info);
+    setProductsData(products);
+  }, [id]);
+
   return (
     <div>
       <NavBar />
@@ -21,13 +32,11 @@ function ProductsDetails() {
         </thead>
         <tbody>
           {
-            allProducts.map((
+            productsData.map((
               {
-                item,
-                descricao,
-                quantidade,
-                valor,
-                total,
+                saleId,
+                productId,
+                quantity,
               },
               index,
             ) => (
@@ -77,4 +86,4 @@ function ProductsDetails() {
   );
 }
 
-export default ProductsDetails;
+export default OrderDetail;

@@ -1,29 +1,29 @@
 const SalesProducts = (sequelize, DataTypes) => {
   const SalesProducts = sequelize.define('salesProducts', {
-    saleId: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      foreignKey: true,
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-      references: {
-        model: 'sales',
-        key: 'id'
-      },
-      allowNull: false
-    },
-    productId: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      foreignKey: true,
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-      references: {
-        model: 'products',
-        key: 'id'
-      },
-      allowNull: false
-    },
+    // saleId: {
+    //   type: DataTypes.INTEGER,
+    //   primaryKey: true,
+    //   foreignKey: true,
+    //   onDelete: 'CASCADE',
+    //   onUpdate: 'CASCADE',
+    //   references: {
+    //     model: 'sales',
+    //     key: 'id'
+    //   },
+    //   allowNull: false
+    // },
+    // productId: {
+    //   type: DataTypes.INTEGER,
+    //   primaryKey: true,
+    //   foreignKey: true,
+    //   onDelete: 'CASCADE',
+    //   onUpdate: 'CASCADE',
+    //   references: {
+    //     model: 'products',
+    //     key: 'id'
+    //   },
+    //   allowNull: false
+    // },
     quantity: DataTypes.INTEGER
   },
     {
