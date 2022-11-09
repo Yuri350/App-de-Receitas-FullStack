@@ -16,4 +16,18 @@ const create = async ({ email, password, name, role = 'customer' }) => {
   };
 };
 
-module.exports = { create };
+const adminCreate = async ({ email, password, name, role = 'customer' }, authorization) => {
+  const userExist = await users.findOne({ where: { email } });
+  const { role: roleAdmin } = tokenHelper.verifyToken(authorization);
+  console.log(roleAdmin);
+  if (userExist || roleAdmin !== 'administrator') return null;
+  const passwordHash = md5(password);
+  await users.create({ email, password: passwordHash, name, role });
+  return {
+    name,
+    email,
+    role,
+  };
+};
+
+module.exports = { create, adminCreate };
