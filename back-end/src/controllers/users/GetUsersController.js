@@ -5,4 +5,9 @@ const getSellers = async (_req, res) => {
   return res.status(200).json(users);
 };
 
-module.exports = { getSellers };
+const getAllUsers = async (_req, res) => {
+  const users = await UsersService.getAllUsers();
+  return res.status(200).json(users);
+};
+
+module.exports = { getSellers, getAllUsers };
