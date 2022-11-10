@@ -10,6 +10,7 @@ export default function NavBar() {
       <nav>
         {
           user.role === 'seller' && (
+
             <NavLink
               data-testid="customer_products__element-navbar-link-orders"
               to="/seller/orders"
