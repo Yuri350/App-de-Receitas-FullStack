@@ -33,6 +33,11 @@ export default function Admin() {
     }
   };
 
+  const handleRemoveUser = async (id) => {
+    await requestRemoveUser(id);
+    window.location.reload();
+  };
+
   useEffect(() => {
     const isVerify = () => {
       const { email, password, name } = data;
@@ -55,17 +60,13 @@ export default function Admin() {
     isVerify();
   }, [data]);
 
-  const handleRemoveUser = async (id) => {
-    await requestRemoveUser(id);
-  };
-
   useEffect(() => {
     const getAllUsers = async () => {
       const users = await requestGetAllUsers();
       setAllUsers(users);
     };
     getAllUsers();
-  }, [allUsers]);
+  }, []);
 
   return (
     <main>

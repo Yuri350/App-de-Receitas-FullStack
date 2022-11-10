@@ -30,9 +30,8 @@ const getByIdSales = async (id) => {
   return result;
 };
 
-const patchSale = async (id) => {
-  const result = await sales.update({ status: 'entregue' }, { where: { id } });
-
+const patchSale = async (id, status) => {
+  const result = await sales.update({ status }, { where: { id } });
   if (!result) return null;
   return result;
 };

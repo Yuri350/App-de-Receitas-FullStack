@@ -6,8 +6,8 @@ const request = async (id) => {
   return data;
 };
 
-export const requestPatch = async (id) => {
-  await api.patch(`/order/${id}`);
+export const requestPatch = async (id, status) => {
+  await api.patch(`/order/${id}`, { status });
 };
 
 export default request;

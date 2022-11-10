@@ -9,7 +9,7 @@ module.exports = {
         delivery_address: 'rua teste, bairro teste',
         delivery_number: '1200',
         sale_date: new Date(),
-        status: 'entregue'
+        status: 'Entregue'
       },
       {
         id: 2,
@@ -19,7 +19,7 @@ module.exports = {
         delivery_address: 'rua teste 2, bairro teste 2',
         delivery_number: '1300',
         sale_date: new Date(),
-        status: 'preparando'
+        status: 'Preparando'
       }], { timestamps: false });
   },
 

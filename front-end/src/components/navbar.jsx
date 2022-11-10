@@ -8,18 +8,35 @@ export default function NavBar() {
   return (
     <header>
       <nav>
-        <NavLink
-          data-testid="customer_products__element-navbar-link-products"
-          to="/customer/products"
-        >
-          Produtos
-        </NavLink>
-        <NavLink
-          data-testid="customer_products__element-navbar-link-orders"
-          to="/customer/orders"
-        >
-          Meus Pedidos
-        </NavLink>
+        {
+          user.role === 'seller' && (
+            <NavLink
+              data-testid="customer_products__element-navbar-link-orders"
+              to="/seller/orders"
+            >
+              Pedidos
+            </NavLink>
+          )
+        }
+
+        {
+          user.role === 'customer' && (
+            <>
+              <NavLink
+                data-testid="customer_products__element-navbar-link-products"
+                to="/customer/products"
+              >
+                Produtos
+              </NavLink>
+              <NavLink
+                data-testid="customer_products__element-navbar-link-orders"
+                to="/customer/orders"
+              >
+                Meus Pedidos
+              </NavLink>
+            </>
+          )
+        }
         <NavLink
           data-testid="customer_products__element-navbar-user-full-name"
           to="/user"

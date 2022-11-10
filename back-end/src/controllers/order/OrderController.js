@@ -9,8 +9,9 @@ const getByIdSales = async (req, res) => {
 
 const patchSales = async (req, res) => {
   const { id } = req.params;
+  const { status } = req.body;
 
-  const result = await orderService.patchSale(id);
+  const result = await orderService.patchSale(id, status);
   return res.status(200).json(result);
 };
 
