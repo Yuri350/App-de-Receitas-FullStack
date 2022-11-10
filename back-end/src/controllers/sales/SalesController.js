@@ -7,6 +7,18 @@ const createSale = async (req, res) => {
   return res.status(201).json(dataValues);
 };
 
+const getByCustomer = async (req, res) => {
+  const salesCustomer = await SalesService.getByCustomer(req.user.id);
+  return res.status(200).json(salesCustomer);
+};
+
+const getBySeller = async (req, res) => {
+  const saleSeller = await SalesService.getBySeller(req.user.id);
+  return res.status(200).json(saleSeller);
+};
+
 module.exports = {
   createSale,
+  getByCustomer,
+  getBySeller,
 };

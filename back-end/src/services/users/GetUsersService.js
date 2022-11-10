@@ -10,4 +10,9 @@ const getSellersId = async (id) => {
   return sellers;
 };
 
-module.exports = { getSellers, getSellersId };
+const getAllUsers = async () => {
+  const allUser = await users.findAll({ attributes: { exclude: ['password'] } });
+  return allUser;
+};
+
+module.exports = { getSellers, getAllUsers, getSellersId };
