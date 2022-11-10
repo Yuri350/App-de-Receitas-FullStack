@@ -7,4 +7,11 @@ const getByIdSales = async (req, res) => {
   return res.status(200).json(result);
 }
 
-module.exports = { getByIdSales };
+const patchSales = async (req, res) => {
+  const { id } = req.params;
+
+  const result = await orderService.patchSale(id);
+  return res.status(200).json(result);
+}
+
+module.exports = { getByIdSales, patchSales };

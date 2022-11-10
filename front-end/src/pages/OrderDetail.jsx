@@ -1,25 +1,66 @@
 import React, { useState, useEffect } from 'react';
-import { userParams } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
-import NavBar from '../components/navbar';
-import orderDetails from '../services/orderDetails';
+import { useParams } from 'react-router-dom';
+import orderDetails, { requestPatch } from '../services/orderDetails';
+import priceFormatter, { dateFormatter } from '../utils/formatter';
 
 function OrderDetail() {
   const [data, setData] = useState({});
   const [productsData, setProductsData] = useState([]);
+  const [pessoaVendedora, setPessoaVendedora] = useState({});
 
-  const { id } = userParams();
+  const { id } = useParams();
+
+  const handleChangeStatus = async () => {
+    await requestPatch(id);
+    window.location.reload();
+  };
 
   useEffect(() => {
-    const { info, products } = orderDetails(id);
-    setData(info);
-    setProductsData(products);
+    const getOrderDetails = async () => {
+      const { info, products, nomePessoaVendedora } = await orderDetails(id);
+      console.log(info);
+      setPessoaVendedora(nomePessoaVendedora);
+      setData(info);
+      setProductsData(products);
+    };
+    getOrderDetails();
   }, [id]);
 
   return (
     <div>
-      <NavBar />
       <h1>Detalhe do pedido</h1>
+      <header>
+        <span data-testid="customer_order_details__element-order-details-label-order-id">
+          Pedido
+          { data.id }
+        </span>
+        <span
+          data-testid="customer_order_details__element-order-details-label-seller-name"
+        >
+          P. Venda
+          { pessoaVendedora.name }
+        </span>
+        <span
+          data-testid="customer_order_details__element-order-details-label-order-date"
+        >
+          Data
+          { data.saleDate && dateFormatter.format(new Date(data.saleDate)) }
+        </span>
+        <span
+          data-testid={ 'customer_order_details__'
+          + 'element-order-details-label-delivery-status' }
+        >
+          { data.status }
+        </span>
+        <button
+          data-testid="customer_order_details__button-delivery-check"
+          disabled={ data.status !== 'preparando' }
+          onClick={ handleChangeStatus }
+          type="button"
+        >
+          MARCAR COMO ENTREGUE
+        </button>
+      </header>
       <table>
         <thead>
           <tr>
@@ -32,56 +73,50 @@ function OrderDetail() {
         </thead>
         <tbody>
           {
-            productsData.map((
-              {
-                saleId,
-                productId,
-                quantity,
-              },
-              index,
-            ) => (
-              <tr key={ uuidv4() }>
+            productsData.map((product, index) => (
+              <tr key={ product.id }>
                 <td
-                  data-testid={ `seller_order_details__
-                  element-order-table-item-number-${index + 1}` } // igual
+                  data-testid={ `customer_order_details__
+                  element-order-table-item-number-${index}` }
                 >
                   {`${index + 1}`}
                 </td>
                 <td
-                  data-testid={ `seller_order_details__
-                  element-order-table-item-number-${index + 1}` } // igual
+                  data-testid={ `customer_order_details__
+                  element-order-table-name-${index}` }
                 >
-                  { item }
+                  { product.name }
                 </td>
                 <td
-                  data-testid={ `seller_order_details__
-                  element-order-table-name-${index + 1}` }
+                  data-testid={ `customer_order_details__
+                  element-order-table-quantity-${index}` }
                 >
-                  { descricao }
+                  { product.ProdutoVendido[0].quantity }
                 </td>
                 <td
-                  data-testid={ `seller_order_details__
-                  element-order-table-quantity-${index + 1}` }
+                  data-testid={ `customer_order_details__
+                  element-order-table-unit-price-${index}` }
                 >
-                  { quantidade }
+                  { priceFormatter.format(product.price) }
                 </td>
                 <td
-                  data-testid={ `seller_order_details__
-                  element-order-table-unit-price-${index + 1}` }
+                  data-testid={ `customer_order_details__
+                  element-order-table-sub-total-${index}` }
                 >
-                  { valor }
-                </td>
-                <td
-                  data-testid={ `seller_order_details__
-                  element-order-table-sub-total-${index + 1}` }
-                >
-                  { total }
+                  { priceFormatter.format(
+                    Number(product.price) * product.ProdutoVendido[0].quantity,
+                  ) }
                 </td>
               </tr>
             ))
           }
         </tbody>
       </table>
+      <span data-testid="customer_order_details__element-order-total-price">
+        Total:
+        {' '}
+        { priceFormatter.format(data.totalPrice) }
+      </span>
     </div>
   );
 }

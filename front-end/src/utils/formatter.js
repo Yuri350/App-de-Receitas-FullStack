@@ -3,4 +3,6 @@ const priceFormatter = new Intl.NumberFormat('pt-BR', {
   currency: 'BRL',
 });
 
+export const dateFormatter = new Intl.DateTimeFormat('pt-BR');
+
 export default priceFormatter;

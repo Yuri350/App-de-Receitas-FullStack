@@ -5,4 +5,9 @@ const getSellers = async () => {
   return sellers;
 };
 
-module.exports = { getSellers };
+const getSellersId = async (id) => {
+  const sellers = await users.findOne({ where: { role: 'seller', id } });
+  return sellers;
+};
+
+module.exports = { getSellers, getSellersId };
