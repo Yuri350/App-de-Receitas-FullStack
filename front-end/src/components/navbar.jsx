@@ -31,7 +31,7 @@ export default function NavBar() {
               </NavLink>
               <NavLink
                 data-testid="customer_products__element-navbar-link-orders"
-                to="/customer/orders"
+                to="/customer/orders" //
               >
                 Meus Pedidos
               </NavLink>
