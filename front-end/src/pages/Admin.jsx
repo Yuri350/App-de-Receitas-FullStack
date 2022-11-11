@@ -35,7 +35,6 @@ export default function Admin() {
 
   const handleRemoveUser = async (id) => {
     await requestRemoveUser(id);
-    window.location.reload();
   };
 
   useEffect(() => {
@@ -130,7 +129,6 @@ export default function Admin() {
           </span>
         )}
       </form>
-
       <table>
         <thead>
           <tr>
