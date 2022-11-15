@@ -1,9 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PriceFormater from '../utils/formatter';
-import getSellers from '../services/requestSellers';
-import purchaseRequest from '../services/sale';
-import { AuthContext } from '../contexts/AuthContext';
+import PriceFormater from '../../utils/formatter';
+import getSellers from '../../services/requestSellers';
+import purchaseRequest from '../../services/sale';
+import { AuthContext } from '../../contexts/AuthContext';
+
+import Title from '../../components/Title';
+import Input from '../../components/Input';
+import Form from '../../components/Form';
+
+import {
+  ContentInput,
+  Select,
+  ButtonContainer,
+  RemoveButtonContainer,
+  Table,
+  Paragraph,
+} from './styles';
 
 function Checkout() {
   const [sellers, setSellers] = useState([]);
@@ -53,11 +66,9 @@ function Checkout() {
 
   return (
     <div>
-      <h1>
-        Finalizar Pedido
-      </h1>
+      <Title styles="PRIMARY" title="Finalizar Pedido" />
       <div>
-        <table>
+        <Table>
           <tr>
             <th>Item</th>
             <th>Descrição</th>
@@ -109,80 +120,80 @@ function Checkout() {
                     `customer_checkout__element-order-table-remove-${index}`
                   }
                 >
-                  <button
+                  <RemoveButtonContainer
                     type="button"
                     onClick={ () => removeCartProduct(item.id) }
+                    styles="PRIMARY"
+                    title="Remover"
                   >
                     Remover
-                  </button>
+                  </RemoveButtonContainer>
                 </td>
               </tr>
             ))
           }
-        </table>
+        </Table>
         <div>
-          <p
+          <Paragraph
             data-testid="customer_checkout__element-order-total-price"
           >
             { `Total: ${PriceFormater.format(totalPrice)}` }
-          </p>
+          </Paragraph>
         </div>
       </div>
-      <h1>
-        Detalhes e Endereço para Entrega
-      </h1>
-      <form>
-        <label htmlFor="P. Vendedora Responsável:">
-          P. Vendedora Responsável:
-          <select
-            name="vendedor"
-            onChange={ handleChange }
-            data-testid="customer_checkout__select-seller"
-          >
-            {
-              sellers.map((seller) => (
-                <option
-                  selected
-                  key={ seller.id }
-                  value={ seller.id }
-                >
-                  { seller.name }
-                </option>
-              ))
-            }
-          </select>
-        </label>
-        <label htmlFor="Endereço:">
+      <Title styles="PRIMARY" title="Detalhes e Endereço" />
+      <Form>
+        Vendedor Responsável:
+        <Select
+          name="vendedor"
+          onChange={ handleChange }
+          data-testid="customer_checkout__select-seller"
+        >
+          {
+            sellers.map((seller) => (
+              <option
+                selected
+                key={ seller.id }
+                value={ seller.id }
+              >
+                { seller.name }
+              </option>
+            ))
+          }
+        </Select>
+        <ContentInput>
           Endereço:
-          <input
+          <Input
             type="text"
             name="endereço"
             placeholder="Endereço:"
             onChange={ handleChange }
             data-testid="customer_checkout__input-address"
           />
-        </label>
-        <label htmlFor="Número:">
+        </ContentInput>
+        <ContentInput>
           Número:
-          <input
+          <Input
             type="text"
             name="numero"
             placeholder="Número:"
             onChange={ handleChange }
             data-testid="customer_checkout__input-address-number"
           />
-        </label>
-      </form>
-      <button
-        type="button"
-        onClick={ finishPurchase }
-        data-testid="customer_checkout__button-submit-order"
-      >
-        Finalizar Pedido
-      </button>
-      {
-        adressError && <p>Por favor, preencha todos os campos</p>
-      }
+        </ContentInput>
+        <ButtonContainer
+          type="button"
+          onClick={ finishPurchase }
+          data-testid="customer_checkout__button-submit-order"
+          types="PRIMARY"
+          title="Finalizar Pedido"
+        >
+          Finalizar Pedido
+        </ButtonContainer>
+        {
+          adressError && <p>Por favor, preencha todos os campos</p>
+        }
+      </Form>
     </div>
   );
 }
