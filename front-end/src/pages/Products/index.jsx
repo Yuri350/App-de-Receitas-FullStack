@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ProductCards from '../components/ProductCard';
-import { AuthContext } from '../contexts/AuthContext';
-import requestProducts from '../services/requestProducts';
-import priceFormatter from '../utils/formatter';
+
+import { FaShoppingCart, FaLock } from 'react-icons/fa';
+import { ButtonCard } from './styles';
+
+import ProductCards from '../../components/ProductCard';
+import { AuthContext } from '../../contexts/AuthContext';
+import requestProducts from '../../services/requestProducts';
+import priceFormatter from '../../utils/formatter';
 
 export default function Products() {
   const { cart, totalPrice } = useContext(AuthContext);
@@ -31,7 +35,8 @@ export default function Products() {
             product={ product }
           />))}
       </div>
-      <button
+      <ButtonCard
+        icon={ <FaShoppingCart /> }
         type="button"
         data-testid="customer_products__button-cart"
         disabled={ cart.length === 0 }
@@ -42,7 +47,7 @@ export default function Products() {
         >
           {`Ver carrinho: ${priceFormatter.format(totalPrice)}`}
         </p>
-      </button>
+      </ButtonCard>
     </main>
   );
 }
