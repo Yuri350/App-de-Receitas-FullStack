@@ -75,11 +75,11 @@ export const RemoveButtonContainer = styled.button`
   font-weight: bold;
   text-transform: uppercase;
   font-size: 1rem;
-  color: ${({ theme }) => theme.white};
+  color: white;
   transition: all 0.2s ease 0s, color 0.2s ease 0s;
   cursor: pointer;
 
-  ${({ theme, types }) => types === 'PRIMARY'
+  ${({ theme, styles }) => styles === 'PRIMARY'
     && css`
       background: ${theme['red-300']};
     `}
