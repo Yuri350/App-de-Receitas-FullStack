@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { FaShoppingCart, FaLock } from 'react-icons/fa';
-import { Card, Content, Icon } from './styles';
+import { ButtonCard } from './styles';
 
 import ProductCards from '../../components/ProductCard';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -35,7 +35,7 @@ export default function Products() {
             product={ product }
           />))}
       </div>
-      <button
+      <ButtonCard
         icon={ <FaShoppingCart /> }
         type="button"
         data-testid="customer_products__button-cart"
@@ -47,7 +47,7 @@ export default function Products() {
         >
           {`Ver carrinho: ${priceFormatter.format(totalPrice)}`}
         </p>
-      </button>
+      </ButtonCard>
     </main>
   );
 }

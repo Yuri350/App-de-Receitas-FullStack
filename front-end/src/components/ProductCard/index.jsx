@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { FaShoppingCart, FaLock } from 'react-icons/fa';
-import { Card, Content, Icon, TitleCard, CostCard, ImageCard, ImageHolder, WraperContainer } from './styles';
+import { Card, Content, Icon, TitleCard, CostCard, ImageCard, ImageHolder, WraperContainer, InputCard, ButtonCard, divInLineBlocks } from './styles';
 
 import { AuthContext } from '../../contexts/AuthContext';
 
@@ -89,27 +89,29 @@ export default function ProductCards({
               alt={ product.name }
             />
           </ImageHolder>
-          <button
-            data-testid={ `customer_products__button-card-rm-item-${product.id}` }
-            type="button"
-            onClick={ removeQuantity }
-          >
-            -
-          </button>
-          <input
-            data-testid={ `customer_products__input-card-quantity-${product.id}` }
-            type="number"
-            min={ 0 }
-            onChange={ handleChange }
-            value={ quantity }
-          />
-          <button
-            data-testid={ `customer_products__button-card-add-item-${product.id}` }
-            type="button"
-            onClick={ addQuantity }
-          >
-            +
-          </button>
+          <divInLineBlocks>
+            <ButtonCard
+              data-testid={ `customer_products__button-card-rm-item-${product.id}` }
+              type="button"
+              onClick={ removeQuantity }
+            >
+              -
+            </ButtonCard>
+            <InputCard
+              data-testid={ `customer_products__input-card-quantity-${product.id}` }
+              type="number"
+              min={ 0 }
+              onChange={ handleChange }
+              value={ quantity }
+            />
+            <ButtonCard
+              data-testid={ `customer_products__button-card-add-item-${product.id}` }
+              type="button"
+              onClick={ addQuantity }
+            >
+              +
+            </ButtonCard>
+          </divInLineBlocks>
         </Content>
       </Card>
     </div>

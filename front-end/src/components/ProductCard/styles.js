@@ -83,7 +83,13 @@ export const ImageCard = styled.img`
       height: 150px;
 `;
 
+export const InputCard = styled.input`
+      width: 44%;
+      text-align: center;
+`;
+
 export const ButtonCard = styled.button`
+      font-size: 200%;
       flex: 0 0 auto;
       height: 40px;
       padding: 0 2rem;
@@ -94,5 +100,9 @@ export const ButtonCard = styled.button`
       box-shadow: 0 11px 15px -7px rgba(0, 0, 0, 0.025);
       transition: background 0.25s;
 
-      &:hober { background: rgba(255, 255, 255, 1);}
+      &:hover { background: rgba(255, 255, 255, 1);}
+`;
+
+export const divInLineBlocks = styled.div`
+      display: flex;
 `;
