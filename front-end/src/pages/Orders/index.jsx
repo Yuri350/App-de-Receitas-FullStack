@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
-import OrdersCard from '../components/OrdersCard';
-import { AuthContext } from '../contexts/AuthContext';
-import { requestCustomerOrders, requestSellerOrders } from '../services/requestOrder';
+import OrdersCard from '../../components/OrdersCard';
+import { AuthContext } from '../../contexts/AuthContext';
+import { requestCustomerOrders, requestSellerOrders } from '../../services/requestOrder';
+import { Card, Content, Icon, TitleCard, CostCard, ImageCard, ImageHolder, WraperContainer, InputCard, ButtonCard, divInLineBlocks } from './styles';
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);

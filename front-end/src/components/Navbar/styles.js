@@ -20,7 +20,7 @@ export const LinkContainer = styled(NavLink)`
   font-size: 14px;
   font-weight: 600;
   margin-left: 0.50rem;
-  color: ${({ theme }) => theme['green-700']};
+  color: ${({ theme }) => theme['green-300']};
   transition: filter 0.2s ease 0s;
 
   &:hover {
@@ -44,7 +44,7 @@ export const ButtonContainer = styled.button`
 
   ${({ theme, types }) => types === 'PRIMARY'
     && css`
-      background: ${theme['green-300']};
+      background: ${theme['green-700']};
     `}
 
   ${({ theme, types }) => types === 'SECONDARY'

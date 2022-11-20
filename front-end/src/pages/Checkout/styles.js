@@ -84,11 +84,6 @@ export const RemoveButtonContainer = styled.button`
       background: ${theme['red-300']};
     `}
 
-  ${({ theme, types }) => types === 'SECONDARY'
-    && css`
-      background: ${theme['grey-700']};
-    `}
-
   &:not(:disabled):hover {
     filter: brightness(0.9);
   }

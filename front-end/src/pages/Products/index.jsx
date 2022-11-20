@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { FaShoppingCart, FaLock } from 'react-icons/fa';
+import { FaShoppingCart } from 'react-icons/fa';
 import { ButtonCard } from './styles';
 
 import ProductCards from '../../components/ProductCard';
@@ -36,8 +36,8 @@ export default function Products() {
           />))}
       </div>
       <ButtonCard
-        icon={ <FaShoppingCart /> }
         type="button"
+        styles="PRIMARY"
         data-testid="customer_products__button-cart"
         disabled={ cart.length === 0 }
         onClick={ () => navigate('/customer/checkout') }
