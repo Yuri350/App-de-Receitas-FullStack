@@ -15,9 +15,6 @@ Back-end:
 
 ## Instalando Dependências e Executando Aplicação
 
-* Para rodar o back-end:
-
-  ```
 <details>
   <summary>
     <strong>🪛 Scripts relevantes do <code>package.json</code> principal</strong>
@@ -57,10 +54,21 @@ Back-end:
 
 </details>
 
-## Executando Testes
+## ESLint
 
 * Para rodar todos os testes:
 
-  ```
-    npm test
-  ```
+ ➡️ Este projeto já vem com as dependências relacionadas ao _linter_ configuradas nos arquivos `package.json` nos seguintes caminhos:
+    - `sd-020-a-project-delivery-app/back-end/package.json`
+    - `sd-020-a-project-delivery-app/front-end/package.json`
+    
+  ➡️ Para poder rodar o `ESLint` basta:
+
+  - Executar o comando `npm install` dentro do projeto, de forma individual, ou seja, execute esse comando dentro da pasta `back-end` e também na pasta `front-end`;
+
+  - Depois execute o comando `npm run lint` dentro de cada uma dessas pastas, assim você verifica as particularidades individualmente;
+
+  - Se a análise do `ESLint` encontrar problemas no seu código, eles serão mostrados no seu terminal. 
+  - Se não houver problema no seu código, nada será impresso no seu terminal.
+
+  - Você pode também instalar o plugin do `ESLint` no `VSCode`. Para isso, bastar ir em extensions e baixar o [plugin `ESLint`](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint).
