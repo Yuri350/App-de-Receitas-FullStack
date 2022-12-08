@@ -13,19 +13,7 @@ Back-end:
 > Desenvolvido usando: NodeJS, ExpressJS, MYSQL, ES6, Sequelize, modelo MSC
 
 
-## Instalando Dependências
-
-> Backend
-```bash
-cd api/ 
-npm install
-``` 
-> Frontend
-```bash
-cd src/
-npm install
-``` 
-## Executando aplicação
+## Instalando Dependências e Executando Aplicação
 
 * Para rodar o back-end:
 
@@ -68,7 +56,6 @@ npm install
     - *uso (na raiz do projeto): `npm run test:dev:report`, `npm run test:dev:report "01login 02register"` ou ainda `npm run test:dev:report "01 02"`*;
 
 </details>
-  ```
 
 ## Executando Testes
 
