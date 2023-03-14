@@ -57,8 +57,8 @@ Back-end:
 ## ESLint
 
  ➡️ Este projeto já vem com as dependências relacionadas ao _linter_ configuradas nos arquivos `package.json` nos seguintes caminhos:
-    - `sd-020-a-project-delivery-app/back-end/package.json`
-    - `sd-020-a-project-delivery-app/front-end/package.json`
+    - `/back-end/package.json`
+    - `/front-end/package.json`
     
   ➡️ Para poder rodar o `ESLint` basta:
 
